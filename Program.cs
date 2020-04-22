@@ -1,5 +1,5 @@
 ﻿using System;
-
+using _CheckSpace;
 
 namespace InterimProject
 {
@@ -7,7 +7,8 @@ namespace InterimProject
     {
         static void Main(string[] args)
         {
-            
+            string login, pass;                             // Получаем от пользователя логин и пароль
+            Check.GetLoginAndPassword(out login, out pass);
 
             Console.ReadKey();
         }   
