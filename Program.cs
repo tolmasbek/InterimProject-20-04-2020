@@ -7,14 +7,19 @@ namespace InterimProject
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("1 Вход\n2 Выход");
+            Console.ForegroundColor = ConsoleColor.Red;
+            System.Console.WriteLine("CREDIT SYSTEM");
+            Console.ForegroundColor = ConsoleColor.White;
+            System.Console.WriteLine("1 Вход\n2 Регистрация\n3 Выход");
             int ch = int.Parse(Console.ReadLine());
             switch(ch)
             {
                 case 1:
                 {
-                    string login, pass;                             // Получаем от пользователя логин и пароль
-                    Authentication.GetLoginAndPassword(out login, out pass);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Clear();
+                    Authentication.GetLoginAndPassword(out string login, out string pass);
+                             
                 }break;
                 case 2:
                 {
