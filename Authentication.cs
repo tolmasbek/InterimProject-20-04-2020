@@ -3,9 +3,9 @@ using System.Data.SqlClient;
 using System.Data;
 using _DataAccessSpace;
 
-namespace _CheckSpace
+namespace _AuthenticationSpace
 {
-    public class Check
+    public class Authentication
     {
         public static void GetLoginAndPassword(out string login, out string pass)
         {
@@ -23,7 +23,7 @@ namespace _CheckSpace
             conn.Open();
             
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
-            SqlDataReader reader = com.ExecuteReader();     // Проверяем правильность логина и пароля
+            SqlDataReader reader = com.ExecuteReader();     
             while ((reader.Read()) && (login != $"{reader.GetValue(1)}" || pass != $"{reader.GetValue(2)}"))
             {
                 Console.WriteLine("Вы ввели неверный пароль. Попробуйте снова.");
