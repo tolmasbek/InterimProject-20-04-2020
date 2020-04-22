@@ -1,5 +1,6 @@
 ﻿using System;
 using _AuthenticationSpace;
+using _CreditCalcSpace;
 
 namespace InterimProject
 {
