@@ -32,9 +32,10 @@ namespace _AuthenticationSpace
             }
             reader.Close();
             conn.Close();
-            
+
             // Вызывает метод добавляющий пользователей и Админа
-            Authentication.AddingUsersAndAdmin(out string loginua, out string passua, out string roleua);     
+            AddingUsersAndAdmin(out string loginua, out string passua, out string roleua);
+                 
         }
         public static void AddingUsersAndAdmin(out string login, out string pass, out string role)
         {
@@ -43,10 +44,17 @@ namespace _AuthenticationSpace
             login = Console.ReadLine();      
             Console.Write("Введите пароль: ");
             pass = Console.ReadLine();     
+            Console.Write("Повторите пароль: ");
+            string repeatpass = Console.ReadLine();
             Console.Write("Введите роль Пользователя: ");
             role = Console.ReadLine();         
 
             string cmdLogPass = $"INSERT INTO Users([Login],[Password],[Role]) VALUES('{login}','{pass}','{role}')";
+            if(pass != repeatpass)
+            {
+                System.Console.WriteLine("Логин или пароль не верный. Попробуйте заново");
+                AddingUsersAndAdmin(out string loginua, out string passua, out string roleua);                    
+            }
             SqlConnection conn = new SqlConnection(DataAccess.ConnectionString);
             if (conn.State == ConnectionState.Open)
             {
