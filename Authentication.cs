@@ -2,6 +2,7 @@ using System;
 using System.Data.SqlClient;
 using System.Data;
 using _DataAccessSpace;
+
 namespace _AuthenticationSpace
 {
     public class Authentication
@@ -11,15 +12,25 @@ namespace _AuthenticationSpace
           public int id;
           public String login;
           public String role;
+          public string err;
+          
         }
-        public User GetLoginAndPassword(SqlConnection conn, string login, string pass)
+        public User NewUser(){
+              User user;
+                user.id=0;
+                user.login="";
+                user.role="";
+                user.err="";
+              return user;
+          }
+        public User GetLoginAndPassword(SqlConnection conn)
         {
             Console.Write("Введите логин: ");
-            login = Console.ReadLine();      
+            string login = Console.ReadLine();      
             Console.Write("Введите пароль: ");
-            pass = Console.ReadLine();        
+           string pass = Console.ReadLine();        
 
-            string cmdLogPass = $"SELECT Id, Login, Role FROM Users where login = '{login}'";
+            string cmdLogPass = $"SELECT Id, Login, Role, Password FROM Users where login = '{login}'";
            
             if (conn.State == ConnectionState.Open)
             {
@@ -28,38 +39,49 @@ namespace _AuthenticationSpace
             conn.Open();
 
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
-            SqlDataReader reader = com.ExecuteReader();     
-            User user;
             
-            user.id = (int) reader.GetValue(0);
-            user.login = (String) reader.GetValue(1);
-            user.role = (string) reader.GetValue(3);
-
-            reader.Close();
-            conn.Close();
-
+            SqlDataReader reader = com.ExecuteReader();     
+            User user= NewUser();
+            if(reader.Read())
+            {
+                user.id=(int) reader.GetValue(0);
+                user.login=(string) reader.GetValue(1);
+                user.role=(string) reader.GetValue(2);
+                if(pass!=(string) reader.GetValue(3))
+                    user.err="pasword mismatch";
+            }         
+            else
+            {
+                user.err="no such user";
+            }   
             return user;
-
         }
-        public static void AddingUser(out string login, out string pass, out string role)
+        public void AddingUser(SqlConnection conn)
         {
             System.Console.WriteLine("Добавить Пользователя: ");
             Console.Write("Введите логин: ");
-            login = Console.ReadLine();      
+            string login = Console.ReadLine();      
             Console.Write("Введите пароль: ");
-            pass = Console.ReadLine();     
+            string pass = Console.ReadLine();     
             Console.Write("Повторите пароль: ");
             string repeatpass = Console.ReadLine();
-            Console.Write("Введите роль Пользователя: ");
-            role = Console.ReadLine();         
-
-            string cmdLogPass = $"INSERT INTO Users([Login],[Password],[Role]) VALUES('{login}','{pass}','{role}')";
-            if(pass != repeatpass)
+            if(pass!= repeatpass)
             {
-                System.Console.WriteLine("Логин или пароль не верный. Попробуйте заново");
-                AddingUser(out string loginua, out string passua, out string roleua);                    
+                return;
             }
-            SqlConnection conn = new SqlConnection(DataAccess.ConnectionString);
+           
+            
+              Console.Write("Введите роль Пользователя: \n1- администратор\n 2- пользователь\n");
+            string role = Console.ReadLine();
+            switch(role){  
+                case "1": role="ADMIN";  break;
+                case "2": role="USER";  break;
+                default: Console.Write("err"); return;
+            }
+        
+                    
+            string cmdLogPass = $"INSERT INTO Users([Login],[Password],[Role]) VALUES('{login}','{pass}','{role}')";
+    
             if (conn.State == ConnectionState.Open)
             {
                 conn.Close();
@@ -68,7 +90,7 @@ namespace _AuthenticationSpace
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
             var result = com.ExecuteNonQuery();
             conn.Close();
-
+            
             Console.WriteLine("Пользователь добавлен!");
         }
     }
