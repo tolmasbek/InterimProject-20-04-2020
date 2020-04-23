@@ -2,21 +2,24 @@ using System;
 using System.Data.SqlClient;
 using System.Data;
 using _DataAccessSpace;
-
 namespace _AuthenticationSpace
 {
     public class Authentication
     {
-        
-        public static void GetLoginAndPassword(out string login, out string pass)
+        public struct User
+        {
+          public int id;
+          public String login;
+          public String role;
+        }
+        public User GetLoginAndPassword(SqlConnection conn, string login, string pass)
         {
             Console.Write("Введите логин: ");
             login = Console.ReadLine();      
             Console.Write("Введите пароль: ");
             pass = Console.ReadLine();        
 
-            string cmdLogPass = "SELECT * FROM Users";
-            SqlConnection conn = new SqlConnection(DataAccess.ConnectionString);
+            string cmdLogPass = $"SELECT Id, Login, Role FROM Users where login = '{login}'";
            
             if (conn.State == ConnectionState.Open)
             {
@@ -26,17 +29,16 @@ namespace _AuthenticationSpace
 
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
             SqlDataReader reader = com.ExecuteReader();     
-            while ((reader.Read()) && (login != $"{reader.GetValue(1)}" || pass != $"{reader.GetValue(2)}"))
-            {
-                Console.WriteLine("Вы ввели неверный пароль. Попробуйте снова.");
-                
-                GetLoginAndPassword(out login, out pass);
-            }
+            User user;
+            
+            user.id = (int) reader.GetValue(0);
+            user.login = (String) reader.GetValue(1);
+            user.role = (string) reader.GetValue(3);
+
             reader.Close();
             conn.Close();
 
-            // Вызывает метод добавляющий пользователей и Админа
-            AddingUser(out string loginua, out string passua, out string roleua);
+            return user;
 
         }
         public static void AddingUser(out string login, out string pass, out string role)

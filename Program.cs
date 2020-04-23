@@ -16,8 +16,10 @@ namespace InterimProject
             switch(ch)
             {
                 case 1:
-                
-                    System.Console.WriteLine("Войти как: \n1 Админ\n2 Пользователь\nВаш выбор: ");
+                    System.Console.WriteLine("Введите Login: ");
+                    string login = Console.ReadLine();
+                    System.Console.WriteLine("Введите Password: ");
+                    string Pass = Console.ReadLine();
                 break;
                 case 2:
 
