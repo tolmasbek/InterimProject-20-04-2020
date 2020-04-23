@@ -7,6 +7,7 @@ namespace _AuthenticationSpace
 {
     public class Authentication
     {
+        
         public static void GetLoginAndPassword(out string login, out string pass)
         {
             Console.Write("Введите логин: ");
@@ -16,6 +17,7 @@ namespace _AuthenticationSpace
 
             string cmdLogPass = "SELECT * FROM Users";
             SqlConnection conn = new SqlConnection(DataAccess.ConnectionString);
+           
             if (conn.State == ConnectionState.Open)
             {
                 conn.Close();
@@ -34,10 +36,10 @@ namespace _AuthenticationSpace
             conn.Close();
 
             // Вызывает метод добавляющий пользователей и Админа
-            AddingUsersAndAdmin(out string loginua, out string passua, out string roleua);
-                 
+            AddingUser(out string loginua, out string passua, out string roleua);
+
         }
-        public static void AddingUsersAndAdmin(out string login, out string pass, out string role)
+        public static void AddingUser(out string login, out string pass, out string role)
         {
             System.Console.WriteLine("Добавить Пользователя: ");
             Console.Write("Введите логин: ");
@@ -53,7 +55,7 @@ namespace _AuthenticationSpace
             if(pass != repeatpass)
             {
                 System.Console.WriteLine("Логин или пароль не верный. Попробуйте заново");
-                AddingUsersAndAdmin(out string loginua, out string passua, out string roleua);                    
+                AddingUser(out string loginua, out string passua, out string roleua);                    
             }
             SqlConnection conn = new SqlConnection(DataAccess.ConnectionString);
             if (conn.State == ConnectionState.Open)
