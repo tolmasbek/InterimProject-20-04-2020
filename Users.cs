@@ -6,20 +6,37 @@ namespace InterimProject
 {
     public class Users
     {
+        public void OrderList(SqlConnection conn, int id_card)
+        {
+            string cmdLogPass = $"SELECT Id, CreditHistory, DelayInCreditHistory, CreditPurpose, CreditTerm, Status FROM Anketa WHERE {id_card}";
+            if (conn.State == ConnectionState.Open)
+            {   conn.Close();   }
+            conn.Open();
+
+            SqlCommand com = new SqlCommand(cmdLogPass, conn);
+            SqlDataReader reader = com.ExecuteReader();
+            while(reader.Read())
+            {
+                System.Console.WriteLine($"Id_Anketa: {reader.GetValue(12)},\nСумма кредита от общего дохода: {reader.GetValue(5)},\nКредитная история: {reader.GetValue(6)},\nПросрока в кред ист: {reader.GetValue(7)},\nЦель кредита: {reader.GetValue(8)},\nСрок кредита: {reader.GetValue(9)},\nСтатус: {reader.GetValue(11)}");
+            }
+            reader.Close();
+            conn.Close();
+        }
+        
         public void Order(SqlConnection conn, int user_id){
             int ball = 0;
             System.Console.WriteLine("Заполните поля:");
             System.Console.WriteLine("Пол:1 - Муж\n2 - Жен ");
             string Gender = Console.ReadLine();
-            if(Gender == "1") {Gender = "male"; ball++; } else { Gender = "fеmale"; ball += 2; }
+            if(Gender == "1") {Gender = "муж"; ball++; } else { Gender = "жен"; ball += 2; }
 
             System.Console.WriteLine("Семейное положение: \n1 - холост\n2 - семянин\n3 - в разводе\n4 - вдовец/вдова");
             string FamilyStatus = Console.ReadLine();
-            if(FamilyStatus == "1"){ FamilyStatus = "холост";   ball += 1; }
+            if(FamilyStatus == "1"){ FamilyStatus = "холост";   ball ++; }
             if(FamilyStatus == "2"){ FamilyStatus = "семянин";  ball += 2; }
             if(FamilyStatus == "3"){ FamilyStatus = "вразводе";  ball ++; }
             if(FamilyStatus == "4")
-            { if(Gender == "male"){ FamilyStatus = "вдовец";  ball += 2; }else
+            { if(Gender == "male"){ FamilyStatus = "вдовец";  ball += 2; } else
                                   { FamilyStatus = "вдова";  ball += 2; } 
             }
             System.Console.WriteLine("Гражданство: \n1 - Таджикистан\n2 - Зарубеж");
@@ -57,8 +74,21 @@ namespace InterimProject
             string CreditTerm = Console.ReadLine();
             if(CreditTerm == "1") {CreditTerm = "до 12 мес"; ball++; } else { CreditTerm = "более 12 мес"; ball++; }
             
-            string cmdLogPass = $"INSERT INTO Anketa([Gender],[FamilyStatus],[Nationality],[AmountTotalIncome],[CreditHistory],[DelayInCreditHistory],[CreditPurpose],[CreditTerm])" + 
-            "VALUES('{Gender}','{FamilyStatus}','{Nationality}','{AmountTotalIncome}','{CreditHistory}','{DelayInCreditHistory}','{CreditPurpose}','{CreditTerm}')";
+            string Status = "";
+            if(ball > 11)
+            {
+                Console.WriteLine($"Ваш балл = {ball}, Ваша заявка Прията!");
+                Status = "одобрено";
+            }
+            else
+            {
+                Console.WriteLine($"Ваш балл <11 = {ball}, Ваша заявка Не прията!");
+                Status = "отказано";
+            }
+            
+
+            string cmdLogPass = $"INSERT INTO Anketa([Gender],[FamilyStatus],[Nationality],[AmountTotalIncome],[CreditHistory],[DelayInCreditHistory],[CreditPurpose],[CreditTerm],[Status])" + 
+            "VALUES('{Gender}','{FamilyStatus}','{Nationality}','{AmountTotalIncome}','{CreditHistory}','{DelayInCreditHistory}','{CreditPurpose}','{CreditTerm}','{Status}')";
             if (conn.State == ConnectionState.Open)
             {
                 conn.Close();
@@ -66,9 +96,7 @@ namespace InterimProject
             conn.Open();
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
             var result = com.ExecuteNonQuery();
-            conn.Close();
-
-            Console.WriteLine("Запись добавлен!");
+            conn.Close();           
         }
     }
 }
