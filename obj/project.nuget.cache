@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4Qt9UE5JCPGoBAhab6Hl1XX8EFl0kT+KCUljNAn2P82gN0WfHuaeljvYElkwKBF4vhNUbaFNGckUDhNpOmKLCA==",
+  "dgSpecHash": "zKYvByTionH+DNDERDDzjoBMmbvaU8lXAO0xsRgk2KZMnwLrRb+mSOkX5LNRJTAS4Od3jE/FFp8ibhGI3XICyQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\InterimProject.csproj",
+  "projectFilePath": "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\InterimProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tolmasbek\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Tolmasbek\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

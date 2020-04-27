@@ -10,24 +10,23 @@ namespace InterimProject
         {
             while(true)
             {
-               System.Console.WriteLine("Команды \nadd - новая заявка\nlist - мои заявки\nexit - разлогиниться");
-            string cmd = Console.ReadLine();
-            switch(cmd){
-                case "add":
-                    Order(conn,id);
-                 break;
-                case "list":
-                    OrderList(conn, id);
-                 break;
-                case "exit": return;
-                default: System.Console.WriteLine("wrong command"); break;
-            } 
+                System.Console.WriteLine("Команды \nadd - новая заявка\nlist - мои заявки\nexit - разлогиниться");
+                string cmd = Console.ReadLine();
+                switch(cmd){
+                    case "add":
+                        Order(conn,id);
+                    break;
+                    case "list":
+                        OrderList(conn, id);
+                    break;
+                    case "exit": return;
+                    default: System.Console.WriteLine("wrong command"); break;
+                } 
             }
-            
         }
         public void OrderList(SqlConnection conn, int id_card)
         {
-            string cmdLogPass = $"SELECT Id, CreditHistory, DelayInCreditHistory, CreditPurpose, CreditTerm, Status FROM Anketa WHERE IdentityCardId={id_card}";
+            string cmdLogPass = $"SELECT Id, CreditHistory, DelayInCreditHistory, CreditPurpose, CreditTerm, Status FROM Anketa WHERE UserId={id_card}";
             if (conn.State == ConnectionState.Open)
             {   conn.Close();   }
             conn.Open();
@@ -83,11 +82,10 @@ namespace InterimProject
             System.Console.WriteLine("Просрока в кредитной истории:\n1 - свыше 7 раз\n2 -   5 - 7 раз\n3 -  4 раза\n4 -  до 3 раза");
             string DelayInCreditHistory = Console.ReadLine();
 
-    
-            if(DelayInCreditHistory == "1"){    ball -= 3; }
+            if(DelayInCreditHistory == "1"){   ball -= 3; }
             if(DelayInCreditHistory == "2"){   ball -= 2; }
             if(DelayInCreditHistory == "3"){   ball -= 1; }
-            if(DelayInCreditHistory == "4"){  }
+            if(DelayInCreditHistory == "4"){   }
 
             System.Console.WriteLine("Цель кредита:\n1 - Бытовая техника\n2 - ремонт\n3 - телефон\n4 - прочее");
             string CreditPurpose = Console.ReadLine();
@@ -117,10 +115,8 @@ namespace InterimProject
                 conn.Close();
             }
             conn.Open();
-            
-            
         
-            string cmdLogPass = $"INSERT INTO Anketa([IdentityCardId],[Age],[Gender],[MaritalStatus],[Nationality],[AmountTotalIncome],[CreditHistory],[DelayInCreditHistory],[CreditPurpose],[CreditTerm],[Status]) VALUES('{user_id}','{Age}','{Gender}','{FamilyStatus}','{Nationality}','{AmountTotalIncome}','{CreditPurpose}','{DelayInCreditHistory}','{CreditPurpose}','{CreditTerm}','{Status}')";
+            string cmdLogPass = $"INSERT INTO Anketa([UserId],[Age],[Gender],[MaritalStatus],[Nationality],[AmountTotalIncome],[CreditHistory],[DelayInCreditHistory],[CreditPurpose],[CreditTerm],[Status]) VALUES('{user_id}','{Age}','{Gender}','{FamilyStatus}','{Nationality}','{AmountTotalIncome}','{CreditHistory}','{DelayInCreditHistory}','{CreditPurpose}','{CreditTerm}','{Status}')";
           
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
             var result = com.ExecuteNonQuery();

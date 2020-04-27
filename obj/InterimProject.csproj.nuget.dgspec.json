@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\InterimProject.csproj": {}
+    "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\InterimProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\InterimProject.csproj": {
+    "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\InterimProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\InterimProject.csproj",
+        "projectUniqueName": "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\InterimProject.csproj",
         "projectName": "InterimProject",
-        "projectPath": "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\InterimProject.csproj",
+        "projectPath": "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\InterimProject.csproj",
         "packagesPath": "C:\\Users\\Tolmasbek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tolmasbek\\Desktop\\InterimProject\\obj\\",
+        "outputPath": "C:\\Users\\Tolmasbek\\Desktop\\Project\\InterimProject-20-04-2020\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Tolmasbek\\AppData\\Roaming\\NuGet\\NuGet.Config"

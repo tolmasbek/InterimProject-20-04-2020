@@ -41,7 +41,7 @@ namespace _AuthenticationSpace
             SqlCommand com = new SqlCommand(cmdLogPass, conn);
             
             SqlDataReader reader = com.ExecuteReader();     
-            User user= NewUser();
+            User user = NewUser();
             if(reader.Read())
             {
                 user.id=(int) reader.GetValue(0);
@@ -70,16 +70,14 @@ namespace _AuthenticationSpace
                 return;
             }
            
-            
-              Console.Write("Введите роль Пользователя: \n1- администратор\n 2- пользователь\n");
+              Console.Write("Введите роль Пользователя: \n1- администратор\n2- пользователь\n");
             string role = Console.ReadLine();
             switch(role){  
                 case "1": role="ADMIN";  break;
                 case "2": role="USER";  break;
                 default: Console.Write("err"); return;
             }
-        
-                    
+                 
             string cmdLogPass = $"INSERT INTO Users([Login],[Password],[Role]) VALUES('{login}','{pass}','{role}')";
     
             if (conn.State == ConnectionState.Open)
